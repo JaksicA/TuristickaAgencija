@@ -14,11 +14,13 @@ namespace TuristickaAgencija.Models
 
         [Required]
         [Display(Name ="Pocetak")]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         public DateTime DatumOd { get; set; }
 
 
         [Required]
         [Display(Name ="Zavrsetak")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DatumDo { get; set; }
     }
 }

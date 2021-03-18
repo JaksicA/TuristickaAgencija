@@ -55,7 +55,7 @@ namespace TuristickaAgencija.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Sezona,DatumOd,DatumDo,Id")] Ponuda ponuda)
-        {
+        {            
             if (ModelState.IsValid)
             {
                 ponuda.Id = Guid.NewGuid();
