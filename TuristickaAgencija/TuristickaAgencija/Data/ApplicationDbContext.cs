@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TuristickaAgencija.Models;
 
 namespace TuristickaAgencija.Data
 {
@@ -12,5 +13,6 @@ namespace TuristickaAgencija.Data
             : base(options)
         {
         }
+        public DbSet<Ponuda> Ponude { get; set; }
     }
 }
