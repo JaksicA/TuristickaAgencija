@@ -1,32 +1,29 @@
-﻿@model IEnumerable<TuristickaAgencija.Models.Aranzman>
+﻿@model IEnumerable<TuristickaAgencija.Models.Smestaj>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Aranzmani</h1>
+<h1>Smestaj</h1>
 
 <p>
-    <a asp-action="Create">Napravi novi aranzman</a>
+    <a asp-action="Create">Napravi novi</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BrojDana)
+                @Html.DisplayNameFor(model => model.BrojKreveta)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mesto)
+                @Html.DisplayNameFor(model => model.Tip)
             </th>
             <th>
-                Smestaj
+                @Html.DisplayNameFor(model => model.Cena)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Popust) 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ponuda)
+                @Html.DisplayNameFor(model => model.Aranzman)
             </th>
             <th></th>
         </tr>
@@ -35,19 +32,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BrojDana)
+                @Html.DisplayFor(modelItem => item.BrojKreveta)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Mesto)
+                @Html.DisplayFor(modelItem => item.Tip)
             </td>
             <td>
-                @Html.ActionLink("Pogledaj sve","SmestajUaranzmanu","Smestaji",new {aranzmanId = item.Id})
+                @Html.DisplayFor(modelItem => item.Cena) e/noc
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Popust)  %
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ponuda.Sezona)
+                @Html.DisplayFor(modelItem => item.Aranzman.Mesto)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
