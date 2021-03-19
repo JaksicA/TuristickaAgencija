@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TuristickaAgencija.Models.Aranzman>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Aranzmani</h1>
+
+<p>
+    <a asp-action="Create">Napravi novi aranzman</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BrojDana)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ponuda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Popust) 
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrojDana)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mesto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ponuda.Sezona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Popust)  %
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
