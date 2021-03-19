@@ -14,7 +14,7 @@ namespace TuristickaAgencija.Data
         {
         }
         public DbSet<Ponuda> Ponude { get; set; }
-
         public DbSet<Aranzman> Aranzmani { get; set; }
+        public DbSet<Smestaj> Smestaji { get; set; }
     }
 }
