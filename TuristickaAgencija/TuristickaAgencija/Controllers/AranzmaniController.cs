@@ -26,6 +26,14 @@ namespace TuristickaAgencija.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Aranzmani/Ponuda
+
+        public async Task<IActionResult> AranzmanUponudi(Guid ponudaId)
+        {
+            var applicationDbContext = _context.Aranzmani.Include(a => a.Ponuda).Where(a => a.PonudaId == ponudaId);
+            return View("Index",await applicationDbContext.ToListAsync());
+        }
+
         // GET: Aranzmani/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

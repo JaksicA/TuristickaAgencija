@@ -22,6 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DatumDo)
             </th>
+            <th>
+                Aranzmani
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DatumDo)
+            </td>
+            <td>
+                @Html.ActionLink("Pogledaj sve", "AranzmanUponudi", "Aranzmani", new {ponudaId = item.Id })
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
