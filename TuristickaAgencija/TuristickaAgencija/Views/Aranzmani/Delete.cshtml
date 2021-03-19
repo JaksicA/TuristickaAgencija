@@ -1,0 +1,44 @@
+﻿@model TuristickaAgencija.Models.Aranzman
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Da li ste sigurni da zelite da obrisete aranzman?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BrojDana)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BrojDana)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mesto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mesto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Popust)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Popust)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ponuda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ponuda.Sezona)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Obrisi" class="btn btn-danger" /> |
+        <a asp-action="Index">Nazad</a>
+    </form>
+</div>
