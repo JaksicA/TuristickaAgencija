@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TuristickaAgencija.Models.Prevoz>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Prevoz</h1>
+
+<p>
+    <a asp-action="Create">Napravi novi</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VrstaPrevoza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aranzman)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VrstaPrevoza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena) e
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aranzman.Mesto)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
