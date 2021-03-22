@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TuristickaAgencija.Models.Smestaj>
+﻿@model TuristickaAgencija.ViewModels.CreateSmestajViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,28 +8,28 @@
 <h1>Smestaj</h1>
 
 <p>
-    <a asp-action="Create">Napravi novi</a>
+    <a asp-action="Create" asp-route-aranzmanId="@Model.AranzmanId">Napravi novi</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BrojKreveta)
+                @Html.DisplayNameFor(model => model.Smestajs[0].BrojKreveta)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tip)
+                @Html.DisplayNameFor(model => model.Smestajs[0].Tip)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cena)
+                @Html.DisplayNameFor(model => model.Smestajs[0].Cena)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Aranzman)
+                @Html.DisplayNameFor(model => model.Smestajs[0].Aranzman)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Smestajs) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BrojKreveta)

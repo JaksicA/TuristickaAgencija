@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
+using TuristickaAgencija.ViewModels;
 
 namespace TuristickaAgencija.Controllers
 {
@@ -23,14 +24,23 @@ namespace TuristickaAgencija.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Smestaji.Include(s => s.Aranzman);
-            return View(await applicationDbContext.ToListAsync());
+            CreateSmestajViewModel viewModel = new CreateSmestajViewModel
+            {
+                Smestajs = await applicationDbContext.ToListAsync()
+            };
+            return View(viewModel);
         }
 
         // GET: SmestajUAranzmanu
         public async Task<IActionResult> SmestajUaranzmanu(Guid aranzmanId)
         {
             var applicationDbContext = _context.Smestaji.Include(s => s.Aranzman).Where(a => a.AranzmanId == aranzmanId);
-            return View("Index",await applicationDbContext.ToListAsync());
+            CreateSmestajViewModel viewModel = new CreateSmestajViewModel
+            {
+                Smestajs = await applicationDbContext.ToListAsync(),
+                AranzmanId = aranzmanId
+            };
+            return View("Index", viewModel);
         }
 
         // GET: Smestaji/Details/5
@@ -53,9 +63,9 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid aranzmanId)
         {
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto");
+            ViewData["AranzmanId"] = aranzmanId;    
             return View();
         }
 
@@ -71,9 +81,8 @@ namespace TuristickaAgencija.Controllers
                 smestaj.Id = Guid.NewGuid();
                 _context.Add(smestaj);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SmestajUaranzmanu),new { aranzmanId = smestaj.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -90,7 +99,6 @@ namespace TuristickaAgencija.Controllers
             {
                 return NotFound();
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -124,9 +132,8 @@ namespace TuristickaAgencija.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(SmestajUaranzmanu), new { aranzmanId = smestaj.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -157,7 +164,7 @@ namespace TuristickaAgencija.Controllers
             var smestaj = await _context.Smestaji.FindAsync(id);
             _context.Smestaji.Remove(smestaj);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(SmestajUaranzmanu),new {aranzmanId = smestaj.AranzmanId });
         }
 
         private bool SmestajExists(Guid id)
