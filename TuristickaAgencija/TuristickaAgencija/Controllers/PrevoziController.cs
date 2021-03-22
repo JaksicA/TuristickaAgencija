@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
+using TuristickaAgencija.ViewModels;
 
 namespace TuristickaAgencija.Controllers
 {
@@ -23,7 +24,11 @@ namespace TuristickaAgencija.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Prevozi.Include(p => p.Aranzman);
-            return View(await applicationDbContext.ToListAsync());
+            CreatePrevozViewModel viewModel = new CreatePrevozViewModel
+            {
+                Prevozs = await applicationDbContext.ToListAsync()
+            };
+            return View(viewModel);
         }
 
         // GET: PrevozUaranzmanu
@@ -31,7 +36,12 @@ namespace TuristickaAgencija.Controllers
         public async Task<IActionResult> PrevozUaranzmanu (Guid aranzmanId)
         {
             var applicationDbContext = _context.Prevozi.Include(p => p.Aranzman).Where(a => a.AranzmanId == aranzmanId);
-            return View("Index",await applicationDbContext.ToListAsync());
+            CreatePrevozViewModel viewModel = new CreatePrevozViewModel
+            {
+                Prevozs = await applicationDbContext.ToListAsync(),
+                AranzmanId = aranzmanId
+            };
+            return View("Index",viewModel);
         }
 
         // GET: Prevozi/Details/5
@@ -54,9 +64,9 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Prevozi/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid aranzmanId)
         {
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto");
+            ViewData["AranzmanId"] = aranzmanId;
             return View();
         }
 
@@ -72,9 +82,8 @@ namespace TuristickaAgencija.Controllers
                 prevoz.Id = Guid.NewGuid();
                 _context.Add(prevoz);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(PrevozUaranzmanu),new { aranzmanId = prevoz.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", prevoz.AranzmanId);
             return View(prevoz);
         }
 
@@ -91,7 +100,6 @@ namespace TuristickaAgencija.Controllers
             {
                 return NotFound();
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", prevoz.AranzmanId);
             return View(prevoz);
         }
 
@@ -125,9 +133,8 @@ namespace TuristickaAgencija.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(PrevozUaranzmanu),new { aranzmanId = prevoz.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", prevoz.AranzmanId);
             return View(prevoz);
         }
 
