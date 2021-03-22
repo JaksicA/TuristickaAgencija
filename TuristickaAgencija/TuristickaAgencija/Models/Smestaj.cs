@@ -22,5 +22,7 @@ namespace TuristickaAgencija.Models
         public Guid AranzmanId { get; set; }
 
         public Aranzman Aranzman { get; set; }
+
+        public ICollection<Prevoz> Prevozs { get; set; } = new List<Prevoz>();
     }
 }

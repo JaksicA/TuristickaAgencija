@@ -23,9 +23,6 @@
                 Smestaj
             </th>
             <th>
-                Prevoz
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Popust) 
             </th>
             <th>
@@ -45,9 +42,6 @@
             </td>
             <td>
                 @Html.ActionLink("Pogledaj sve","SmestajUaranzmanu","Smestaji",new {aranzmanId = item.Id})
-            </td>
-            <td>
-                @Html.ActionLink("Pogledaj sve","PrevozUaranzmanu","Prevozi", new {aranzmanId = item.Id})
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Popust)  %

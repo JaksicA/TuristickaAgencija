@@ -1,41 +1,35 @@
-﻿@model TuristickaAgencija.ViewModels.CreatePrevozViewModel
+﻿@model IEnumerable<TuristickaAgencija.Models.Prevoz>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Prevoz</h1>
+<h1>Prevozi</h1>
 
 <p>
-    <a asp-action="Create" asp-route-aranzmanId ="@Model.AranzmanId">Napravi novi</a>
+    <a asp-action="Create">Napravi novi</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Prevozs[0].VrstaPrevoza)
+                @Html.DisplayNameFor(model => model.VrstaPrevoza)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Prevozs[0].Cena)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prevozs[0].Aranzman)
+                @Html.DisplayNameFor(model => model.Cena)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Prevozs) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.VrstaPrevoza)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cena) e
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aranzman.Mesto)
+                @Html.DisplayFor(modelItem => item.Cena)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |

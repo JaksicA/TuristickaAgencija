@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,8 +9,9 @@ namespace TuristickaAgencija.ViewModels
 {
     public class CreatePrevozViewModel
     {
-        public Guid AranzmanId { get; set; }
-        public List<Prevoz> Prevozs { get; set; }
+        public Guid SmestajId { get; set; }
+        public Guid PrevozId { get; set; }
+        public List<SelectListItem> DostupniPrevoz { get; set; } = new List<SelectListItem>();
 
     }
 }

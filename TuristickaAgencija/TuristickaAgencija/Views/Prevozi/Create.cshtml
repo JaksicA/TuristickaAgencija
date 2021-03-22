@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Novi prevoz</h1>
+<h1>Novi</h1>
 
 <hr />
 <div class="row">
@@ -23,9 +23,6 @@
                 <span asp-validation-for="Cena" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="AranzmanId" type="hidden"/>
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Sacuvaj" class="btn btn-primary" />
             </div>
         </form>
@@ -33,7 +30,7 @@
 </div>
 
 <div>
-    <a asp-action="PrevozUaranzmanu" asp-route-aranzmanId ="@ViewBag.AranzmanId">Nazad</a>
+    <a asp-action="Index">Nazad</a>
 </div>
 
 @section Scripts {
