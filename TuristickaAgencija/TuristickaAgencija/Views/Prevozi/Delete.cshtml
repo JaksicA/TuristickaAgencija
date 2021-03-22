@@ -33,6 +33,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Obrisi" class="btn btn-danger" /> |
-        <a asp-action="Index">Nazad</a>
+        <a asp-action="PrevozUaranzmanu" asp-route-aranzmanId="@Model.AranzmanId">Nazad</a>
     </form>
 </div>

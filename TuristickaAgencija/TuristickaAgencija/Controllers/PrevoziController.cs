@@ -165,7 +165,7 @@ namespace TuristickaAgencija.Controllers
             var prevoz = await _context.Prevozi.FindAsync(id);
             _context.Prevozi.Remove(prevoz);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(PrevozUaranzmanu),new {aranzmanId = prevoz.AranzmanId});
         }
 
         private bool PrevozExists(Guid id)

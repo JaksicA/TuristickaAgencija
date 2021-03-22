@@ -65,12 +65,7 @@ namespace TuristickaAgencija.Controllers
         // GET: Smestaji/Create
         public IActionResult Create(Guid aranzmanId)
         {
-            ViewData["AranzmanId"] = aranzmanId;
-            //CreateSmestajViewModel viewModel = new CreateSmestajViewModel
-            //{
-            //    AranzmanId = aranzmanId
-            //};
-            
+            ViewData["AranzmanId"] = aranzmanId;    
             return View();
         }
 
@@ -88,7 +83,6 @@ namespace TuristickaAgencija.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(SmestajUaranzmanu),new { aranzmanId = smestaj.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -105,7 +99,6 @@ namespace TuristickaAgencija.Controllers
             {
                 return NotFound();
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -141,7 +134,6 @@ namespace TuristickaAgencija.Controllers
                 }
                 return RedirectToAction(nameof(SmestajUaranzmanu), new { aranzmanId = smestaj.AranzmanId });
             }
-            ViewData["AranzmanId"] = new SelectList(_context.Aranzmani, "Id", "Mesto", smestaj.AranzmanId);
             return View(smestaj);
         }
 
@@ -172,7 +164,7 @@ namespace TuristickaAgencija.Controllers
             var smestaj = await _context.Smestaji.FindAsync(id);
             _context.Smestaji.Remove(smestaj);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(SmestajUaranzmanu),new {aranzmanId = smestaj.AranzmanId });
         }
 
         private bool SmestajExists(Guid id)
