@@ -14,9 +14,6 @@ namespace TuristickaAgencija.Models
 
         public float Cena { get; set; }
 
-        [Display(Name ="Izaberi aranzman")]
-        public Guid AranzmanId { get; set; }
-
-        public Aranzman Aranzman { get; set; }
+        public ICollection<Smestaj> Smestajs { get; set; } = new List<Smestaj>();
     }
 }

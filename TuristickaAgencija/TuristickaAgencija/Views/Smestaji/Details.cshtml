@@ -36,6 +36,35 @@
         </dd>
     </dl>
 </div>
+<a asp-action="DodajPrevoz" asp-route-smestajId="@Model.Id">Dodaj prevoz</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tip prevoza
+            </th>
+            <th>
+                Cena
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Prevozs.Any())
+        { 
+            foreach(var item in Model.Prevozs)
+                {
+                    <tr>
+                        <td>
+                            @item.VrstaPrevoza
+                        </td>
+                        <td>
+                            @item.Cena e
+                        </td>
+                    </tr>
+                }
+        }
+    </tbody>
+</table>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Izmeni</a> |
     <a asp-action="SmestajUaranzmanu" asp-route-aranzmanId="@Model.AranzmanId">Nazad</a>

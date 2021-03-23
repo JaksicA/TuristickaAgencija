@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TuristickaAgencija.Models.Rezervacija>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Rezervacije</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Smestaj.Aranzman.Mesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Smestaj.Aranzman.BrojDana)
+            </th>
+            <th>
+                Ukupna cena
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Smestaj.Aranzman.Mesto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Smestaj.Aranzman.BrojDana)
+            </td>
+            <td>
+                @{ var cena =(item.Smestaj.Cena*item.Smestaj.Aranzman.BrojDana + item.Prevoz.Cena);
+                    var popust = cena * (item.Smestaj.Aranzman.Popust / 100);
+                    var ukupnaCena = cena - popust;}
+                @ukupnaCena
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Otkazi</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

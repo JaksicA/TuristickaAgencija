@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
-using TuristickaAgencija.ViewModels;
 
 namespace TuristickaAgencija.Controllers
 {
@@ -23,25 +22,7 @@ namespace TuristickaAgencija.Controllers
         // GET: Prevozi
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Prevozi.Include(p => p.Aranzman);
-            CreatePrevozViewModel viewModel = new CreatePrevozViewModel
-            {
-                Prevozs = await applicationDbContext.ToListAsync()
-            };
-            return View(viewModel);
-        }
-
-        // GET: PrevozUaranzmanu
-
-        public async Task<IActionResult> PrevozUaranzmanu (Guid aranzmanId)
-        {
-            var applicationDbContext = _context.Prevozi.Include(p => p.Aranzman).Where(a => a.AranzmanId == aranzmanId);
-            CreatePrevozViewModel viewModel = new CreatePrevozViewModel
-            {
-                Prevozs = await applicationDbContext.ToListAsync(),
-                AranzmanId = aranzmanId
-            };
-            return View("Index",viewModel);
+            return View(await _context.Prevozi.ToListAsync());
         }
 
         // GET: Prevozi/Details/5
@@ -53,7 +34,6 @@ namespace TuristickaAgencija.Controllers
             }
 
             var prevoz = await _context.Prevozi
-                .Include(p => p.Aranzman)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (prevoz == null)
             {
@@ -64,9 +44,8 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Prevozi/Create
-        public IActionResult Create(Guid aranzmanId)
+        public IActionResult Create()
         {
-            ViewData["AranzmanId"] = aranzmanId;
             return View();
         }
 
@@ -75,14 +54,14 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VrstaPrevoza,Cena,AranzmanId,Id")] Prevoz prevoz)
+        public async Task<IActionResult> Create([Bind("VrstaPrevoza,Cena,Id")] Prevoz prevoz)
         {
             if (ModelState.IsValid)
             {
                 prevoz.Id = Guid.NewGuid();
                 _context.Add(prevoz);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(PrevozUaranzmanu),new { aranzmanId = prevoz.AranzmanId });
+                return RedirectToAction(nameof(Index));
             }
             return View(prevoz);
         }
@@ -108,7 +87,7 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("VrstaPrevoza,Cena,AranzmanId,Id")] Prevoz prevoz)
+        public async Task<IActionResult> Edit(Guid id, [Bind("VrstaPrevoza,Cena,Id")] Prevoz prevoz)
         {
             if (id != prevoz.Id)
             {
@@ -133,7 +112,7 @@ namespace TuristickaAgencija.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(PrevozUaranzmanu),new { aranzmanId = prevoz.AranzmanId });
+                return RedirectToAction(nameof(Index));
             }
             return View(prevoz);
         }
@@ -147,7 +126,6 @@ namespace TuristickaAgencija.Controllers
             }
 
             var prevoz = await _context.Prevozi
-                .Include(p => p.Aranzman)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (prevoz == null)
             {
@@ -165,7 +143,7 @@ namespace TuristickaAgencija.Controllers
             var prevoz = await _context.Prevozi.FindAsync(id);
             _context.Prevozi.Remove(prevoz);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(PrevozUaranzmanu),new {aranzmanId = prevoz.AranzmanId});
+            return RedirectToAction(nameof(Index));
         }
 
         private bool PrevozExists(Guid id)

@@ -10,6 +10,7 @@ namespace TuristickaAgencija.Models
     {
         [Required]
         [Range(1,10)]
+        [Display(Name ="Broj kreveta")]
         public int BrojKreveta { get; set; }
 
         [Required]
@@ -22,5 +23,7 @@ namespace TuristickaAgencija.Models
         public Guid AranzmanId { get; set; }
 
         public Aranzman Aranzman { get; set; }
+
+        public ICollection<Prevoz> Prevozs { get; set; } = new List<Prevoz>();
     }
 }

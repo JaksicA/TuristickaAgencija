@@ -22,9 +22,6 @@
                 <input asp-for="Cena" class="form-control" />
                 <span asp-validation-for="Cena" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="AranzmanId"/>
-            </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Sacuvaj" class="btn btn-primary" />
@@ -34,7 +31,7 @@
 </div>
 
 <div>
-    <a asp-action="PrevozUaranzmanu" asp-route-aranzmanId="@Model.AranzmanId">Nazad</a>
+    <a asp-action="Index">Nazad</a>
 </div>
 
 @section Scripts {

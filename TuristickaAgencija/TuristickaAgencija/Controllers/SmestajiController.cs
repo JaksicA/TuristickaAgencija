@@ -53,6 +53,7 @@ namespace TuristickaAgencija.Controllers
 
             var smestaj = await _context.Smestaji
                 .Include(s => s.Aranzman)
+                .Include(p => p.Prevozs)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (smestaj == null)
             {
@@ -170,6 +171,57 @@ namespace TuristickaAgencija.Controllers
         private bool SmestajExists(Guid id)
         {
             return _context.Smestaji.Any(e => e.Id == id);
+        }
+    
+        public async Task<IActionResult> DodajPrevoz(Guid smestajId)
+        {
+            bool exist = SmestajExists(smestajId);
+            if (!exist)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var prevozi =await _context.Prevozi.Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = string.Join(" - ", a.VrstaPrevoza, a.Cena + "e")
+                }).ToListAsync();
+
+                CreatePrevozViewModel viewModel = new CreatePrevozViewModel
+                {
+                    DostupniPrevoz = prevozi,
+                    SmestajId = smestajId
+                };
+                return View("AddAvailableTransport", viewModel);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DodajPrevoz ([Bind("PrevozId,SmestajId")]CreatePrevozViewModel viewModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var prevozi = await _context.Prevozi.Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = string.Join(" - ", a.VrstaPrevoza, a.Cena + "e")
+                }).ToListAsync();
+
+                viewModel.DostupniPrevoz.AddRange(prevozi);
+
+                return View("AddAvailableTransport", viewModel);
+            }
+
+            var smestaj = _context.Smestaji.FirstOrDefault(s => s.Id == viewModel.SmestajId);
+            var prevoz = _context.Prevozi.FirstOrDefault(p => p.Id == viewModel.PrevozId);
+            smestaj.Prevozs.Add(prevoz);
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Details), new { id = viewModel.SmestajId });
         }
     }
 }
