@@ -10,6 +10,7 @@ namespace TuristickaAgencija.Models
     {
         [Required]
         [Range(1,10)]
+        [Display(Name ="Broj kreveta")]
         public int BrojKreveta { get; set; }
 
         [Required]

@@ -25,6 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Smestajs[0].Aranzman)
             </th>
+            <th>
+
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +50,9 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
+            </td>
+            <td>
+                <a asp-action="Create" asp-controller="Rezervacijas" asp-route-smestajId="@item.Id">Rezervisi</a>
             </td>
         </tr>
 }

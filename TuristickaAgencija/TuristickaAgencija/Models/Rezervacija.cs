@@ -15,6 +15,8 @@ namespace TuristickaAgencija.Models
         public IdentityUser User { get; set; }
 
         public Guid SmestajId { get; set; }
+
+        [Display(Name ="Izaberite prevoz")]
         public Guid PrevozId { get; set; }
 
         public Smestaj Smestaj { get; set; }
