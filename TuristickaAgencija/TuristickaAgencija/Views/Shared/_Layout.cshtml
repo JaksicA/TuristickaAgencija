@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TuristickaAgencija</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-darkly.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-dark bg-dark box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Turisticka Agencija</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -19,16 +19,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                        @if(User.Identity.IsAuthenticated){ <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ponude" asp-action="Index">Ponude</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Ponude" asp-action="Index">Ponude</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Aranzmani" asp-action="Index">Aranzmani</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Aranzmani" asp-action="Index">Aranzmani</a>
                         </li>
                         @if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Admin)) {<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Prevozi" asp-action="Index">Prevoz</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Prevozi" asp-action="Index">Prevoz</a>
                         </li>}
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Rezervacijas" asp-action="Index">Rezervacije</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Rezervacijas" asp-action="Index">Rezervacije</a>
                         </li>}
                     </ul>
                     <partial name="_LoginPartial" />
