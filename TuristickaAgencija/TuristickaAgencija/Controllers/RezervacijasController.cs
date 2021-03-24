@@ -81,6 +81,7 @@ namespace TuristickaAgencija.Controllers
             }));
 
             ViewData["PrevozId"] = listaPrevoza;
+            ViewData["AranzmanId"] = smestaj.AranzmanId;
             return View();
         }
 
