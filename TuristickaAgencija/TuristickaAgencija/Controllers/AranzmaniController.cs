@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
+using TuristickaAgencija.Strings;
 
 namespace TuristickaAgencija.Controllers
 {
+    [Authorize(Roles =RoleNames.AdminIkorisnik)]
     public class AranzmaniController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,6 +38,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Aranzmani/Details/5
+        [Authorize(Roles=RoleNames.Admin)]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -54,6 +58,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Aranzmani/Create
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Create()
         {
             ViewData["PonudaId"] = new SelectList(_context.Ponude, "Id", "Sezona");
@@ -65,6 +70,7 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Create([Bind("BrojDana,Mesto,Popust,PonudaId,Id")] Aranzman aranzman)
         {
             if (ModelState.IsValid)
@@ -79,6 +85,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Aranzmani/Edit/5
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -100,6 +107,7 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Edit(Guid id, [Bind("BrojDana,Mesto,Popust,PonudaId,Id")] Aranzman aranzman)
         {
             if (id != aranzman.Id)
@@ -132,6 +140,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Aranzmani/Delete/5
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -153,6 +162,7 @@ namespace TuristickaAgencija.Controllers
         // POST: Aranzmani/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var aranzman = await _context.Aranzmani.FindAsync(id);

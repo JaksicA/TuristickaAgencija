@@ -45,7 +45,10 @@
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Otkazi</a>
+             @if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Korisnik))
+                {
+                 <a asp-action="Delete" asp-route-id="@item.Id">Otkazi</a>
+                }
             </td>
         </tr>
 }
