@@ -41,7 +41,7 @@
                 @{ var cena =(item.Smestaj.Cena*item.Smestaj.Aranzman.BrojDana + item.Prevoz.Cena);
                     var popust = cena * (item.Smestaj.Aranzman.Popust / 100);
                     var ukupnaCena = cena - popust;}
-                @ukupnaCena
+                @ukupnaCena e
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |

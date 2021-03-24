@@ -48,7 +48,7 @@
             @{ var cena = (Model.Smestaj.Cena * Model.Smestaj.Aranzman.BrojDana + Model.Prevoz.Cena);
                 var popust = cena * (Model.Smestaj.Aranzman.Popust / 100);
                 var ukupnaCena = cena - popust;}
-            @ukupnaCena
+            @ukupnaCena e
         </dd>
     </dl>
     

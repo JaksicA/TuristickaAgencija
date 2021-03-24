@@ -120,7 +120,7 @@ namespace TuristickaAgencija.Controllers
 
 
         // GET: Rezervacijas/Delete/5
-        [Authorize(Roles = RoleNames.Korisnik)]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -151,13 +151,13 @@ namespace TuristickaAgencija.Controllers
         // POST: Rezervacijas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles=RoleNames.Korisnik)]
+        [Authorize(Roles=RoleNames.AdminIkorisnik)]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var rezervacija = await _context.Rezervacije.FindAsync(id);
-            if(rezervacija.UserId != currentUserId)
+            if (rezervacija.UserId != currentUserId)
             {
                 return Forbid();
             }
