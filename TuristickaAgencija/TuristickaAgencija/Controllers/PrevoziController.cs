@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
+using TuristickaAgencija.Strings;
 
 namespace TuristickaAgencija.Controllers
 {
+    [Authorize(Roles = RoleNames.Admin)]
     public class PrevoziController : Controller
     {
         private readonly ApplicationDbContext _context;

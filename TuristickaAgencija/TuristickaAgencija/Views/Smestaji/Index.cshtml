@@ -7,54 +7,65 @@
 
 <h1>Smestaj</h1>
 
-<p>
-    <a asp-action="Create" asp-route-aranzmanId="@Model.AranzmanId">Napravi novi</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Smestajs[0].BrojKreveta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Smestajs[0].Tip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Smestajs[0].Cena)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Smestajs[0].Aranzman)
-            </th>
-            <th>
-
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Smestajs) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrojKreveta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cena) e/noc
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aranzman.Mesto)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
-            </td>
-            <td>
-                <a asp-action="Create" asp-controller="Rezervacijas" asp-route-smestajId="@item.Id">Rezervisi</a>
-            </td>
-        </tr>
+@if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Admin))
+{<p>
+        <a asp-action="Create" asp-route-aranzmanId="@Model.AranzmanId">Napravi novi</a>
+ </p>
+ <p>
+     <a asp-action="Index" >Vidi sve</a>
+ </p>
 }
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Smestajs[0].BrojKreveta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Smestajs[0].Tip)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Smestajs[0].Cena)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Smestajs[0].Aranzman)
+                </th>
+                <th>
+
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Smestajs)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BrojKreveta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cena) e/noc
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aranzman.Mesto)
+                </td>
+                @if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Admin))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
+                    </td>
+                }
+                @if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Korisnik))
+                {   <td>
+                        <a asp-action="Create" asp-controller="Rezervacijas" asp-route-smestajId="@item.Id">Rezervisi</a>
+                    </td>
+                }
+                </tr>
+            }
+        </tbody>
+    </table>

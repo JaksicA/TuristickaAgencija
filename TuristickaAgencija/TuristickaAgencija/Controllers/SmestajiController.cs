@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TuristickaAgencija.Data;
 using TuristickaAgencija.Models;
+using TuristickaAgencija.Strings;
 using TuristickaAgencija.ViewModels;
 
 namespace TuristickaAgencija.Controllers
 {
+    [Authorize(Roles =RoleNames.AdminIkorisnik)]
     public class SmestajiController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +24,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Smestaji.Include(s => s.Aranzman);
@@ -44,6 +48,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji/Details/5
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -64,6 +69,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji/Create
+        [Authorize(Roles = RoleNames.Admin)]
         public IActionResult Create(Guid aranzmanId)
         {
             ViewData["AranzmanId"] = aranzmanId;    
@@ -75,6 +81,7 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Create([Bind("BrojKreveta,Tip,Cena,AranzmanId,Id")] Smestaj smestaj)
         {
             if (ModelState.IsValid)
@@ -88,6 +95,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji/Edit/5
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -108,6 +116,7 @@ namespace TuristickaAgencija.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Edit(Guid id, [Bind("BrojKreveta,Tip,Cena,AranzmanId,Id")] Smestaj smestaj)
         {
             if (id != smestaj.Id)
@@ -139,6 +148,7 @@ namespace TuristickaAgencija.Controllers
         }
 
         // GET: Smestaji/Delete/5
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -160,6 +170,7 @@ namespace TuristickaAgencija.Controllers
         // POST: Smestaji/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var smestaj = await _context.Smestaji.FindAsync(id);
@@ -172,7 +183,9 @@ namespace TuristickaAgencija.Controllers
         {
             return _context.Smestaji.Any(e => e.Id == id);
         }
-    
+
+
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> DodajPrevoz(Guid smestajId)
         {
             bool exist = SmestajExists(smestajId);
@@ -199,6 +212,7 @@ namespace TuristickaAgencija.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleNames.Admin)]
         public async Task<IActionResult> DodajPrevoz ([Bind("PrevozId,SmestajId")]CreatePrevozViewModel viewModel)
         {
 

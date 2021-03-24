@@ -7,48 +7,54 @@
 
 <h1>Ponude</h1>
 
-<p>
-    <a asp-action="Create">Napravi novu ponudu</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Sezona)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatumOd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatumDo)
-            </th>
-            <th>
-                Aranzmani
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sezona)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumOd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumDo)
-            </td>
-            <td>
-                @Html.ActionLink("Pogledaj sve", "AranzmanUponudi", "Aranzmani", new {ponudaId = item.Id })
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
-            </td>
-        </tr>
+@if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Admin))
+{<p>
+        <a asp-action="Create">Napravi novu ponudu</a>
+ </p>
 }
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sezona)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatumOd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatumDo)
+                </th>
+                <th>
+                    Aranzmani
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sezona)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumOd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumDo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Pogledaj sve", "AranzmanUponudi", "Aranzmani", new { ponudaId = item.Id })
+                    </td>
+                    @if (User.IsInRole(TuristickaAgencija.Strings.RoleNames.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Izmeni</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Detalji</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Obrisi</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
