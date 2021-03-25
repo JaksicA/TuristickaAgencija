@@ -23,6 +23,12 @@
             @Html.DisplayFor(model => model.Smestaj.Tip)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Smestaj.BrojKreveta)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Smestaj.BrojKreveta)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prevoz)
         </dt>
         <dd class="col-sm-10">
@@ -47,7 +53,7 @@
             @{ var cena = (Model.Smestaj.Cena * Model.Smestaj.Aranzman.BrojDana + Model.Prevoz.Cena);
                 var popust = cena * (Model.Smestaj.Aranzman.Popust / 100);
                 var ukupnaCena = cena - popust;}
-            @ukupnaCena e
+            @ukupnaCena e / za jednu osobu
         </dd>
     </dl>
 </div>
