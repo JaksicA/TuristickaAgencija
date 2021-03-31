@@ -218,24 +218,52 @@ namespace TuristickaAgencija.Controllers
 
             if (!ModelState.IsValid)
             {
-                var prevozi = await _context.Prevozi.Select(a => new SelectListItem
-                {
-                    Value = a.Id.ToString(),
-                    Text = string.Join(" - ", a.VrstaPrevoza, a.Cena + "e")
-                }).ToListAsync();
+                var prevozi = await GetPrevoz();
 
                 viewModel.DostupniPrevoz.AddRange(prevozi);
 
                 return View("AddAvailableTransport", viewModel);
             }
 
-            var smestaj = _context.Smestaji.FirstOrDefault(s => s.Id == viewModel.SmestajId);
+            var smestaj = _context.Smestaji.Include(p => p.Prevozs).FirstOrDefault(s => s.Id == viewModel.SmestajId);
             var prevoz = _context.Prevozi.FirstOrDefault(p => p.Id == viewModel.PrevozId);
+            if (smestaj.Prevozs.Any(p => p.Id == viewModel.PrevozId))
+            {
+                var prevozi = await GetPrevoz();
+
+                viewModel.DostupniPrevoz.AddRange(prevozi);
+
+                ModelState.AddModelError("Greska", "Vec postoji!");
+
+                return View("AddAvailableTransport", viewModel);
+            }
             smestaj.Prevozs.Add(prevoz);
+
 
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Details), new { id = viewModel.SmestajId });
+        }
+
+        public async Task<List<SelectListItem>> GetPrevoz()
+        {
+            return  await _context.Prevozi.Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = string.Join(" - ", a.VrstaPrevoza, a.Cena + "e")
+            }).ToListAsync();
+        }
+
+        public async Task<IActionResult> ObrisiPrevoz (Guid id , Guid prevozId)
+        {
+            var smestaj = _context.Smestaji.Include(p => p.Prevozs).FirstOrDefault(s => s.Id == id);
+            var prevoz = _context.Prevozi.FirstOrDefault(p => p.Id == prevozId);
+
+            smestaj.Prevozs.Remove(prevoz);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new {id = id });
         }
     }
 }
